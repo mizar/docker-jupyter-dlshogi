@@ -4,7 +4,7 @@ if not exist .dl\rclone-v1.57.0-windows-amd64.zip (
 curl --create-dirs -RLo .dl\rclone-v1.57.0-windows-amd64.zip https://downloads.rclone.org/v1.57.0/rclone-v1.57.0-windows-amd64.zip
 powershell "Push-Location .dl;Expand-Archive rclone-v1.57.0-windows-amd64.zip -Force;Pop-Location;"
 )
-findstr "\[GCTData\]" "%APPDATA%\rclone\rclone.conf" >NUL
+powershell -Command "if((Get-Content -Raw (Join-Path $env:APPDATA 'rclone/rclone.conf')) -match '\[GCTData\][\r\n]+(\w+ = .*[\r\n]+)*1token ='){exit 0}else{exit 1}"
 if "%ERRORLEVEL%"=="1" (
 .dl\rclone-v1.57.0-windows-amd64\rclone-v1.57.0-windows-amd64\rclone.exe config create GCTData drive scope=drive.readonly root_folder_id=1Lkh4HL0tMx9p3NNbHue9lvh_HOSBGxhv
 )
