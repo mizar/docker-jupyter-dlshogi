@@ -21,3 +21,4 @@
 - `x20_rebuild__standard.bat` : JupyterLab 環境の再構築
 - `x30_kill__standard.bat` : JupyterLab 環境の強制終了
 - `x40_bash__standard.bat` : bash 端末の起動
+- `x90_delete_rclone_conf.bat` : rclone の設定ファイルを削除(rclone から Google Drive へのアカウント連携に失敗して再設定が必要な時に)
