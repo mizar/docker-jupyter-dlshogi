@@ -1,0 +1,1 @@
+@powershell.exe -NoProfile -ExecutionPolicy unrestricted -Command "Start-Process PowerShell.exe 'Write-Host ''Update the WSL.'';wsl.exe --update; wsl.exe --shutdown;Write-Host;Write-Host ''WSL update completed.'';sleep 5;' -Verb runas"

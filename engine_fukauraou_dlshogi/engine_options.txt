@@ -1,0 +1,5 @@
+option name EvalDir type string default .
+option name BookDir type string default .
+option name BookMoves type spin default 256 min 0 max 10000
+option name BookFile type combo default book.bin var no_book var standard_book.db var yaneura_book1.db var yaneura_book2.db var yaneura_book3.db var yaneura_book4.db var user_book1.db var user_book2.db var user_book3.db var book.bin
+option name ConsiderBookMoveCount type check default true

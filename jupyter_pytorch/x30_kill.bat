@@ -1,0 +1,1 @@
+docker kill pytorch-jupyter
