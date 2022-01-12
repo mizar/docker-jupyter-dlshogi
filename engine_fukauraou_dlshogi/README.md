@@ -13,8 +13,14 @@
 ## ファイル構成
 
 - エンジンベンチマーク用バッチファイル(エンジン動作環境のビルド/ベンチマーク用)
-  - `bench_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版)ベンチマーク用バッチファイル
-  - `bench_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版)ベンチマーク用バッチファイル
+  - `bench_t1_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=1)ベンチマーク用バッチファイル
+  - `bench_t1_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=1)ベンチマーク用バッチファイル
+  - `bench_t2_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=2)ベンチマーク用バッチファイル
+  - `bench_t2_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=2)ベンチマーク用バッチファイル
+  - `bench_t3_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=3)ベンチマーク用バッチファイル
+  - `bench_t3_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=3)ベンチマーク用バッチファイル
+  - `bench_t4_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=4)ベンチマーク用バッチファイル
+  - `bench_t4_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=4)ベンチマーク用バッチファイル
 - エンジンビルド用バッチファイル(エンジン動作環境のビルド用)
   - `setup_dlshogi_wcsc31.bat` : ふかうら王/dlshogiエンジンビルド・WCSC31版dlshogi with GCTモデルダウンロード用バッチファイル
     cf. [2021-05-05 dlshogi with GCT（WCSC31バージョン）のWindows版ビルド済みファイル公開](https://tadaoyamaoka.hatenablog.com/entry/2021/05/05/121233)
