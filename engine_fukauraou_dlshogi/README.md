@@ -12,12 +12,15 @@
 
 ## ファイル構成
 
+- エンジンベンチマーク用バッチファイル(エンジン動作環境のビルド/ベンチマーク用)
+  - `bench_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版)ベンチマーク用バッチファイル
+  - `bench_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版)ベンチマーク用バッチファイル
 - エンジンビルド用バッチファイル(エンジン動作環境のビルド用)
   - `setup_dlshogi_wcsc31.bat` : ふかうら王/dlshogiエンジンビルド・WCSC31版dlshogi with GCTモデルダウンロード用バッチファイル
     cf. [2021-05-05 dlshogi with GCT（WCSC31バージョン）のWindows版ビルド済みファイル公開](https://tadaoyamaoka.hatenablog.com/entry/2021/05/05/121233)
   - `fukauraou_dlshogi_build.bat` : ふかうら王/dlshogiエンジンビルド用バッチファイル
   - `fukauraou_dlshogi_rebuild.bat` : ふかうら王/dlshogiエンジン再ビルド用バッチファイル
-- エンジン起動用ファイル(ShogiGUI等への登録用)
+- エンジン起動用バッチファイル(ShogiGUI等への登録用)
   - `engine_dlshogi.bat` : dlshogiエンジン(AVX2版)起動用バッチファイル
   - `engine_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版)起動用バッチファイル
   - `engine_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版)起動用バッチファイル

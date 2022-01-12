@@ -2,10 +2,18 @@
 
 ## ファイル構成
 
+- エンジンベンチマーク用バッチファイル(エンジン動作環境のビルド/ベンチマーク用/スレッド数=物理コア数)
+  - `bench_pc_suisho5_yaneuraou_avx2.bat` : 水匠5+やねうら王エンジン(AVX2/ZEN3版)ベンチマーク用バッチファイル
+  - `bench_pc_suisho5_yaneuraou_zen2.bat` : 水匠5+やねうら王エンジン(ZEN2版)ベンチマーク用バッチファイル
+  - `bench_pc_suisho5_yaneuraou_sse42.bat` : 水匠5+やねうら王エンジン(SSE42版)ベンチマーク用バッチファイル
+- エンジンベンチマーク用バッチファイル(エンジン動作環境のビルド/ベンチマーク用/スレッド数=論理プロセッサ数)
+  - `bench_lp_suisho5_yaneuraou_avx2.bat` : 水匠5+やねうら王エンジン(AVX2/ZEN3版)ベンチマーク用バッチファイル
+  - `bench_lp_suisho5_yaneuraou_zen2.bat` : 水匠5+やねうら王エンジン(ZEN2版)ベンチマーク用バッチファイル
+  - `bench_lp_suisho5_yaneuraou_sse42.bat` : 水匠5+やねうら王エンジン(SSE42版)ベンチマーク用バッチファイル
 - エンジンビルド用バッチファイル(エンジン動作環境のビルド用)
   - `suisho5_yaneuraou_build.bat` : 水匠5+やねうら王エンジンビルド用バッチファイル
   - `suisho5_yaneuraou_rebuild.bat` : 水匠5+やねうら王エンジン再ビルド用バッチファイル
-- エンジン起動用ファイル(ShogiGUI等への登録用)
+- エンジン起動用バッチファイル(ShogiGUI等への登録用)
   - `engine_suisho5_yaneuraou_avx2.bat` : 水匠5+やねうら王エンジン(AVX2/ZEN3版)起動用バッチファイル
   - `engine_suisho5_yaneuraou_zen2.bat` : 水匠5+やねうら王エンジン(ZEN2版)起動用バッチファイル
   - `engine_suisho5_yaneuraou_sse42.bat` : 水匠5+やねうら王エンジン(SSE42版)起動用バッチファイル
