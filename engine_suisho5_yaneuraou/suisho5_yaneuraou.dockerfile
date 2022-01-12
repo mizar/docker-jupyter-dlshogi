@@ -24,7 +24,7 @@ RUN \
     echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot.gpg] https://apt.llvm.org/focal/ llvm-toolchain-focal-13 main" | tee /etc/apt/sources.list.d/llvm-toolchain-focal.list &&\
     apt-get update &&\
     apt-get -y --no-install-recommends -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" install \
-    build-essential clang-13 llvm-13 libomp-13-dev lld-13 libopenblas-dev git ruby unzip vim-tiny &&\
+    build-essential clang-13 llvm-13 libomp-13-dev lld-13 libopenblas-dev expect git ruby unzip vim-tiny &&\
     apt-get -y clean &&\
     apt-get -y autoclean &&\
     apt-get -y autoremove &&\

@@ -27,7 +27,7 @@ RUN \
     echo "deb [signed-by=/usr/share/keyrings/cuda.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" | tee /etc/apt/sources.list.d/cuda.list &&\
     apt-get update &&\
     apt-get -y --no-install-recommends -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" install \
-    build-essential clang-13 llvm-13 libomp-13-dev lld-13 libopenblas-dev cuda-minimal-build-11-5 cuda-nvrtc-dev-11-5 libcudnn8-dev libnvinfer-dev libnvinfer-plugin-dev libnvonnxparsers-dev libnvparsers-dev git ruby unzip vim-tiny &&\
+    build-essential clang-13 llvm-13 libomp-13-dev lld-13 libopenblas-dev expect git ruby unzip vim-tiny cuda-minimal-build-11-5 cuda-nvrtc-dev-11-5 libcudnn8-dev libnvinfer-dev libnvinfer-plugin-dev libnvonnxparsers-dev libnvparsers-dev git ruby unzip vim-tiny &&\
     apt-get -y clean &&\
     apt-get -y autoclean &&\
     apt-get -y autoremove &&\
