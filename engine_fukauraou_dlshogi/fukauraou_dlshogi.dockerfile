@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 SHELL ["/bin/bash", "-c"]
 
-# mirror://mirrors.ubuntu.com/mirrors.txt
+# RUN sed -i.bak -r 's!(deb|deb-src) http://archive\.ubuntu\.com/ubuntu!\1 mirror://mirrors.ubuntu.com/mirrors.txt!' /etc/apt/sources.list
 RUN \
     touch /etc/apt/mirrorlist.txt &&\
     echo "http://ubuntu-ashisuto.ubuntulinux.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
