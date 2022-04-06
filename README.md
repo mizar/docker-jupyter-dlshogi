@@ -18,8 +18,8 @@ Docker Desktop for Windows + NVIDIA GeForce RTX シリーズの GPU 搭載 PC �
 Windows を再起動した場合、 Windows にサインイン
 ### 準備2
 - `x02_install_shogigui.bat` : ShogiGUI をインストール。インターネット接続が必要。
-- `x03_wsl_update_shutdown.bat` : 「Linux 用 Windows サブシステム」をアップデート。インターネット接続が必要。
-- `x04_cuda_displaydriver.bat` : 「NVIDIA CUDA」対応ディスプレイドライバをインストール。インターネット接続が必要。
+- `x03_cuda_displaydriver.bat` : 「NVIDIA CUDA」対応ディスプレイドライバをインストール。インターネット接続が必要。
+- `x04_wsl_update_shutdown.bat` : 「Linux 用 Windows サブシステム」をアップデート。インターネット接続が必要。
 - `x05_install_docker_desktop.bat` : 「Docker Desktop for Windows」をインストール。インターネット接続が必要。インストールプログラム終了後、インストールした Docker Desktop 有効化のため、 自動的に Windows をサインオフする
 ### サインイン
 - Docker Desktop 有効化のため自動的に Windows をサインオフした後、 Windows にサインイン
