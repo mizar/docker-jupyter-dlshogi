@@ -29,7 +29,8 @@ RUN \
     echo "deb [signed-by=/usr/share/keyrings/cuda.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" | tee /etc/apt/sources.list.d/cuda.list &&\
     apt-get update &&\
     apt-get -y --no-install-recommends -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" install \
-    build-essential clang-14 llvm-14 libomp-14-dev lld-14 libopenblas-dev expect git ruby unzip vim-tiny \
+    expect git ruby unzip vim-tiny \
+    build-essential clang-14 llvm-14 libomp-14-dev lld-14 libopenblas-dev \
     cuda-minimal-build-11-6 cuda-nvrtc-dev-11-6 \
     libcudnn8-dev \
     libnvinfer-dev libnvinfer-plugin-dev libnvonnxparsers-dev libnvparsers-dev \
@@ -39,6 +40,17 @@ RUN \
     apt-get -y autoremove &&\
     rm -rf /var/lib/apt/lists/* &&\
     rm -rf /usr/share/doc/*
+
+# node.js
+RUN \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
+    apt-get -y --no-install-recommends \
+    -o DPkg::options::="--force-confdef" \
+    -o DPkg::options::="--force-confold" \
+    install \
+    nodejs \
+    corepack enable &&\
+    rm -rf /var/lib/apt/lists/*
 
 ENV PATH $PATH:/usr/local/cuda/bin
 
@@ -53,22 +65,29 @@ WORKDIR /workspace
 RUN \
     echo "shallow clone : shogi-server" &&\
     git clone https://github.com/mizar/shogi-server.git ~/shogi-server -b wcsc2022 --depth 1 &&\
+    echo "shallow clone : usi-tee-ws" &&\
+    git clone https://github.com/mizar/usi-tee-ws.git ~/usi-tee-ws -b master --depth 1 &&\
     echo "shallow clone : YaneuraOu master" &&\
     git clone https://github.com/yaneurao/YaneuraOu.git ~/YaneuraOu -b master --depth 1 &&\
     echo "shallow clone : dlshogi master" &&\
     git clone https://github.com/TadaoYamaoka/DeepLearningShogi.git ~/DeepLearningShogi -b master --depth 1
 
-RUN if [ -e ~/patch_yaneuraou.diff ]; then \
-    echo "apply diff : YaneuraOu" &&\
-    cd ~/YaneuraOu &&\
-    git apply ~/patch_yaneuraou.diff;\
-    fi
+#RUN if [ -e ~/patch_yaneuraou.diff ]; then \
+#    echo "apply diff : YaneuraOu" &&\
+#    cd ~/YaneuraOu &&\
+#    git apply ~/patch_yaneuraou.diff;\
+#    fi
 
-RUN if [ -e ~/patch_dlshogi.diff ]; then \
-    echo "apply diff : DeepLearningShogi" &&\
-    cd ~/DeepLearningShogi/ &&\
-    git apply ~/patch_dlshogi.diff;\
-    fi
+#RUN if [ -e ~/patch_dlshogi.diff ]; then \
+#    echo "apply diff : DeepLearningShogi" &&\
+#    cd ~/DeepLearningShogi/ &&\
+#    git apply ~/patch_dlshogi.diff;\
+#    fi
+
+RUN \
+    cd ~/usi-tee-ws &&\
+    yarn &&\
+    cd /workspace
 
 # build Suisho5 + YaneuraOu
 RUN \

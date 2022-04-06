@@ -1,17 +1,19 @@
-FROM nvcr.io/nvidia/tensorflow:21.12-tf1-py3
+FROM nvcr.io/nvidia/tensorflow:22.03-tf1-py3
 
 ENV DEBIAN_FRONTEND noninteractive
 
 # mirror://mirrors.ubuntu.com/mirrors.txt
 RUN \
     touch /etc/apt/mirrorlist.txt &&\
-    echo "http://ubuntu-ashisuto.ubuntulinux.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    echo "http://www.ftp.ne.jp/Linux/packages/ubuntu/archive/" >> /etc/apt/mirrorlist.txt &&\
-    echo "http://ftp.riken.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    echo "http://ftp.jaist.ac.jp/pub/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    echo "http://ubuntutym.u-toyama.ac.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    echo "http://ftp.tsukuba.wide.ad.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    echo "http://mirror.fairway.ne.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://azure.archive.ubuntu.com/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://ubuntu-ashisuto.ubuntulinux.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://www.ftp.ne.jp/Linux/packages/ubuntu/archive/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://ftp.riken.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://ftp.jaist.ac.jp/pub/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://ubuntutym.u-toyama.ac.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://ftp.tsukuba.wide.ad.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://mirror.fairway.ne.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    #echo "http://jp.archive.ubuntu.com/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     sed -i.bak -r 's!(deb|deb-src) http://archive\.ubuntu\.com/ubuntu!\1 mirror+file:/etc/apt/mirrorlist.txt!' /etc/apt/sources.list
 
 # install ubuntu packages
@@ -29,16 +31,27 @@ RUN \
     update-locale LANG=ja_JP.UTF-8 &&\
     rm -rf /var/lib/apt/lists/*
 
-# clang-13 repository
+# node.js
+RUN \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
+    apt-get -y --no-install-recommends \
+    -o DPkg::options::="--force-confdef" \
+    -o DPkg::options::="--force-confold" \
+    install \
+    nodejs \
+    corepack enable &&\
+    rm -rf /var/lib/apt/lists/*
+
+# clang-14 repository
 RUN \
     curl "https://apt.llvm.org/llvm-snapshot.gpg.key" | gpg --no-default-keyring --keyring /usr/share/keyrings/llvm-snapshot.gpg --import - &&\
-    echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot.gpg] https://apt.llvm.org/focal/ llvm-toolchain-focal-13 main" | tee /etc/apt/sources.list.d/llvm-toolchain-focal.list;
+    echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot.gpg] https://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | tee /etc/apt/sources.list.d/llvm-toolchain-focal.list;
 
-# install clang-13
+# install clang-14
 RUN \
     apt-get update &&\
     apt-get -y --no-install-recommends -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" install \
-    clang-13 llvm-13 libomp-13-dev lld-13 &&\
+    clang-14 llvm-14 libomp-14-dev lld-14 &&\
     apt-get -y clean &&\
     apt-get -y autoclean &&\
     apt-get -y autoremove &&\
