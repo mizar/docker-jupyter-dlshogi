@@ -4,23 +4,23 @@ Docker Desktop for Windows + NVIDIA GeForce RTX シリーズの GPU 搭載 PC �
 ## Docker Desktop 環境などの事前準備
 
 - [Download ZIP](https://github.com/mizar/docker-jupyter-dlshogi/archive/refs/heads/main.zip) リンクより、ファイル一式をダウンロード
-- 以下の手順に従って、順番に Windowsバッチファイル (*.bat) を実行
+- 以下の手順に従って、順番に Windowsコマンドスクリプト (*.cmd) を実行
 
 ### 準備0
-- `x00a_remove_zoneid.bat` : フォルダ内のファイルに対して、「インターネット等、別のコンピュータから取得したファイル」警告用フラグを消去
-- `x00b_windows_version.bat` : Windows 10/Windows 11 の バージョン10.0.19044 (21H2)以降、OSArchitecture が 64ビットであるかの確認
-- `x00c_get_device_display.bat` : ディスプレイデバイス NVIDIA GeForce RTX が PC に存在するか・有効であるかの確認
-- `x00d_show_file_ext.bat` : ファイルエクスプローラにて、ファイルの拡張子を表示する設定をする。エクスプローラは設定有効化のため、プロセスをいったん終了して開き直す。
+- `x00a_remove_zoneid.cmd` : フォルダ内のファイルに対して、「インターネット等、別のコンピュータから取得したファイル」警告用フラグを消去
+- `x00b_windows_version.cmd` : Windows 10/Windows 11 の バージョン10.0.19044 (21H2)以降、OSArchitecture が 64ビットであるかの確認
+- `x00c_get_device_display.cmd` : ディスプレイデバイス NVIDIA GeForce RTX が PC に存在するか・有効であるかの確認
+- `x00d_show_file_ext.cmd` : ファイルエクスプローラにて、ファイルの拡張子を表示する設定をする。エクスプローラは設定有効化のため、プロセスをいったん終了して開き直す。
 ### 準備1
-- `x01_enable_windowsoptionalfeature.bat` : Windowsの機能「仮想マシン プラットフォーム」「Linux 用 Windows サブシステム」を有効化し、必要であれば自動的に Windows を再起動する
+- `x01_enable_windowsoptionalfeature.cmd` : Windowsの機能「仮想マシン プラットフォーム」「Linux 用 Windows サブシステム」を有効化し、必要であれば自動的に Windows を再起動する
 ### サインイン
 - 「仮想マシン プラットフォーム」「Linux 用 Windows サブシステム」有効化のために
 Windows を再起動した場合、 Windows にサインイン
 ### 準備2
-- `x02_install_shogigui.bat` : ShogiGUI をインストール。インターネット接続が必要。
-- `x03_cuda_displaydriver.bat` : 「NVIDIA CUDA」対応ディスプレイドライバをインストール。インターネット接続が必要。
-- `x04_wsl_update_shutdown.bat` : 「Linux 用 Windows サブシステム」をアップデート。インターネット接続が必要。
-- `x05_install_docker_desktop.bat` : 「Docker Desktop for Windows」をインストール。インターネット接続が必要。インストールプログラム終了後、インストールした Docker Desktop 有効化のため、 自動的に Windows をサインオフする
+- `x02_install_shogigui.cmd` : ShogiGUI をインストール。インターネット接続が必要。
+- `x03_cuda_displaydriver.cmd` : 「NVIDIA CUDA」対応ディスプレイドライバをインストール。インターネット接続が必要。
+- `x04_wsl_update_shutdown.cmd` : 「Linux 用 Windows サブシステム」をアップデート。インターネット接続が必要。
+- `x05_install_docker_desktop.cmd` : 「Docker Desktop for Windows」をインストール。インターネット接続が必要。インストールプログラム終了後、インストールした Docker Desktop 有効化のため、 自動的に Windows をサインオフする
 ### サインイン
 - Docker Desktop 有効化のため自動的に Windows をサインオフした後、 Windows にサインイン
 - Docker Desktop 利用規約・サブスクリプションプランに同意

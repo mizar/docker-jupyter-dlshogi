@@ -12,20 +12,20 @@
 
 ## ファイル構成
 
-- エンジンベンチマーク用バッチファイル(エンジン動作環境のビルド/ベンチマーク用)
-  - `bench_t1_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=1)ベンチマーク用バッチファイル
-  - `bench_t1_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=1)ベンチマーク用バッチファイル
-  - `bench_t2_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=2)ベンチマーク用バッチファイル
-  - `bench_t2_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=2)ベンチマーク用バッチファイル
-  - `bench_t3_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=3)ベンチマーク用バッチファイル
-  - `bench_t3_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=3)ベンチマーク用バッチファイル
-  - `bench_t4_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版,スレッド数=4)ベンチマーク用バッチファイル
-  - `bench_t4_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版,スレッド数=4)ベンチマーク用バッチファイル
-- エンジンビルド用バッチファイル(エンジン動作環境のビルド用)
-  - `setup_dlshogi_wcsc31.bat` : ふかうら王/dlshogiエンジンビルド・WCSC31版dlshogi with GCTモデルダウンロード用バッチファイル
+- エンジンベンチマーク用コマンドスクリプト(エンジン動作環境のビルド/ベンチマーク用)
+  - `bench_t1_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版,スレッド数=1)ベンチマーク用コマンドスクリプト
+  - `bench_t1_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版,スレッド数=1)ベンチマーク用コマンドスクリプト
+  - `bench_t2_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版,スレッド数=2)ベンチマーク用コマンドスクリプト
+  - `bench_t2_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版,スレッド数=2)ベンチマーク用コマンドスクリプト
+  - `bench_t3_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版,スレッド数=3)ベンチマーク用コマンドスクリプト
+  - `bench_t3_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版,スレッド数=3)ベンチマーク用コマンドスクリプト
+  - `bench_t4_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版,スレッド数=4)ベンチマーク用コマンドスクリプト
+  - `bench_t4_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版,スレッド数=4)ベンチマーク用コマンドスクリプト
+- エンジンビルド用コマンドスクリプト(エンジン動作環境のビルド用)
+  - `setup_dlshogi_wcsc31.cmd` : ふかうら王/dlshogiエンジンビルド・WCSC31版dlshogi with GCTモデルダウンロード用コマンドスクリプト
     cf. [2021-05-05 dlshogi with GCT（WCSC31バージョン）のWindows版ビルド済みファイル公開](https://tadaoyamaoka.hatenablog.com/entry/2021/05/05/121233)
-  - `fukauraou_dlshogi_build.bat` : ふかうら王/dlshogiエンジンビルド用バッチファイル
-  - `fukauraou_dlshogi_rebuild.bat` : ふかうら王/dlshogiエンジン再ビルド用バッチファイル
+  - `fukauraou_dlshogi_build.cmd` : ふかうら王/dlshogiエンジンビルド用コマンドスクリプト
+  - `fukauraou_dlshogi_rebuild.cmd` : ふかうら王/dlshogiエンジン再ビルド用コマンドスクリプト
 - エンジン起動用バッチファイル(ShogiGUI等への登録用)
   - `engine_dlshogi.bat` : dlshogiエンジン(AVX2版)起動用バッチファイル
   - `engine_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版)起動用バッチファイル
