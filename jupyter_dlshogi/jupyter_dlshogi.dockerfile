@@ -8,8 +8,8 @@ RUN \
     echo "http://azure.archive.ubuntu.com/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     #echo "http://ubuntu-ashisuto.ubuntulinux.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     #echo "http://www.ftp.ne.jp/Linux/packages/ubuntu/archive/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://ftp.riken.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://ftp.jaist.ac.jp/pub/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://ftp.riken.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://ftp.jaist.ac.jp/pub/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     #echo "http://ubuntutym.u-toyama.ac.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     #echo "http://ftp.tsukuba.wide.ad.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     #echo "http://mirror.fairway.ne.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
@@ -27,7 +27,7 @@ RUN \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
     install \
-    build-essential ca-certificates curl git gnupg2 language-pack-ja libopenblas-dev p7zip-full p7zip-rar ruby tzdata unzip wget xz-utils vim &&\
+    build-essential ca-certificates curl git gpg gpg-agent language-pack-ja libopenblas-dev p7zip-full p7zip-rar ruby tzdata unzip wget xz-utils vim &&\
     update-locale LANG=ja_JP.UTF-8 &&\
     rm -rf /var/lib/apt/lists/*
 
