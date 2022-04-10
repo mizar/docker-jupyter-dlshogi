@@ -34,7 +34,7 @@ RUN \
     rm -rf /var/lib/apt/lists/* &&\
     rm -rf /usr/share/doc/*
 
-# node.js
+# install node.js
 RUN \
     curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
     apt-get -y --no-install-recommends \
@@ -43,6 +43,9 @@ RUN \
     install \
     nodejs &&\
     corepack enable &&\
+    apt-get -y clean &&\
+    apt-get -y autoclean &&\
+    apt-get -y autoremove &&\
     rm -rf /var/lib/apt/lists/* &&\
     rm -rf /usr/share/doc/*
 
