@@ -38,7 +38,7 @@ RUN \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
     install \
-    nodejs \
+    nodejs &&\
     corepack enable &&\
     rm -rf /var/lib/apt/lists/*
 
