@@ -66,7 +66,7 @@ ENV LANGUAGE ja_JP:ja
 ENV LC_ALL ja_JP.UTF-8
 
 RUN echo "20211222_0205"
-# install chogi
+# install cshogi
 RUN pip3 install cshogi
 
 # update jupyterlab
