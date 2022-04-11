@@ -27,13 +27,14 @@
   - `fukauraou_dlshogi_build.cmd` : ふかうら王/dlshogiエンジンビルド用コマンドスクリプト
   - `fukauraou_dlshogi_rebuild.cmd` : ふかうら王/dlshogiエンジン再ビルド用コマンドスクリプト
 - エンジン起動用バッチファイル(ShogiGUI等への登録用)
-  - `engine_dlshogi.bat` : dlshogiエンジン(AVX2版)起動用バッチファイル
-  - `engine_fukauraou_avx2.bat` : ふかうら王エンジン(AVX2版)起動用バッチファイル
-  - `engine_fukauraou_zen2.bat` : ふかうら王エンジン(ZEN2版)起動用バッチファイル
+  - `engine_dlshogi.cmd` : dlshogiエンジン(AVX2版)起動用バッチファイル
+  - `engine_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版)起動用バッチファイル
+  - `engine_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版)起動用バッチファイル
 - その他
   - `engine_options.txt` : ふかうら王用デフォルトオプション変更用ファイル
   - `README.md` : このファイル
 
 ## 注釈
 
-- ShogiGUIでは、エンジンの追加時に指定できるファイルの種類が「開く」ダイアログのデフォルトで「`実行ファイル (*.exe)`」となっています。「`Windows バッチ ファイル (*.bat)`」をエンジンとしてファイルを選択して登録するためには、これを「`すべてのファイル (*.*)`」に変更する必要があります。
+- [ShogiGUI](http://shogigui.siganus.com/)では、エンジンの追加時に指定できるファイルの種類が「開く」ダイアログのデフォルトで「`実行ファイル (*.exe)`」となっています。「`Windows コマンド スクリプト (*.cmd)`」をエンジンとしてファイルを選択して登録するためには、これを「`すべてのファイル (*.*)`」に変更する必要があります。
+- [将棋所](http://shogidokoro.starfree.jp/)では、エンジンの追加時に「`Windows コマンド スクリプト (*.cmd)`」をエンジンとしてファイルを選択して登録するためには、5.0.1以降のバージョンが必要です。（それ以前のバージョンでもファイルを選択できないだけで、ファイル名入力欄に直接ファイル名を入力すれば登録することはできるようです。）
