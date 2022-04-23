@@ -6,20 +6,24 @@ SHELL ["/bin/bash", "-c"]
 RUN \
     touch /etc/apt/mirrorlist.txt &&\
     echo "http://azure.archive.ubuntu.com/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://ubuntu-ashisuto.ubuntulinux.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://www.ftp.ne.jp/Linux/packages/ubuntu/archive/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://ubuntu-ashisuto.ubuntulinux.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://www.ftp.ne.jp/Linux/packages/ubuntu/archive/" >> /etc/apt/mirrorlist.txt &&\
     echo "http://ftp.riken.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     echo "http://ftp.jaist.ac.jp/pub/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://ubuntutym.u-toyama.ac.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://ftp.tsukuba.wide.ad.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://mirror.fairway.ne.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
-    #echo "http://jp.archive.ubuntu.com/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://ubuntutym.u-toyama.ac.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://ftp.tsukuba.wide.ad.jp/Linux/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://mirror.fairway.ne.jp/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
+    echo "http://jp.archive.ubuntu.com/ubuntu/" >> /etc/apt/mirrorlist.txt &&\
     sed -i.bak -r 's!(deb|deb-src) http://archive\.ubuntu\.com/ubuntu!\1 mirror+file:/etc/apt/mirrorlist.txt!' /etc/apt/sources.list
 
 RUN \
     export DEBIAN_FRONTEND=noninteractive &&\
     apt-get update &&\
-    apt-get -y --no-install-recommends -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" install \
+    apt-get -y --no-install-recommends \
+    -o Acquire::Retries="8" \
+    -o DPkg::options::="--force-confdef" \
+    -o DPkg::options::="--force-confold" \
+    install \
     ca-certificates curl gpg gpg-agent &&\
     mkdir -p /workspace &&\
     curl "https://apt.llvm.org/llvm-snapshot.gpg.key" | gpg --no-default-keyring --keyring /usr/share/keyrings/llvm-snapshot.gpg --import - &&\
@@ -28,11 +32,15 @@ RUN \
     curl "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub" | gpg --no-default-keyring --keyring /usr/share/keyrings/cuda.gpg --import - &&\
     echo "deb [signed-by=/usr/share/keyrings/cuda.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" | tee /etc/apt/sources.list.d/cuda.list &&\
     apt-get update &&\
-    apt-get -y --no-install-recommends -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" install \
+    apt-get -y --no-install-recommends \
+    -o Acquire::Retries="8" \
+    -o DPkg::options::="--force-confdef" \
+    -o DPkg::options::="--force-confold" \
+    install \
     expect git ruby unzip vim-tiny \
     build-essential clang-14 llvm-14 libomp-14-dev lld-14 libopenblas-dev \
-    cuda-minimal-build-11-6 cuda-nvrtc-dev-11-6 \
-    libcudnn8-dev \
+    cuda-minimal-build-11-6 cuda-nvrtc-dev-11-6 libcublas-11-6 libcublas-dev-11-6 \
+    libcudnn8 libcudnn8-dev \
     libnvinfer-dev libnvinfer-plugin-dev libnvonnxparsers-dev libnvparsers-dev \
     &&\
     apt-get -y clean &&\
@@ -43,7 +51,7 @@ RUN \
 
 # install node.js
 RUN \
-    curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
+    curl -sL https://deb.nodesource.com/setup_18.x | bash - &&\
     apt-get -y --no-install-recommends \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
