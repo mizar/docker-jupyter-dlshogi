@@ -19,12 +19,12 @@ RUN \
 # install ubuntu packages
 RUN \
     apt-get update &&\
-    apt-get -y \
+    DEBIAN_FRONTEND=noninteractive apt-get -y \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
     upgrade &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
@@ -36,7 +36,7 @@ RUN \
 # install node.js
 RUN \
     curl -sL https://deb.nodesource.com/setup_18.x | bash - &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
@@ -46,8 +46,7 @@ RUN \
     apt-get -y clean &&\
     apt-get -y autoclean &&\
     apt-get -y autoremove &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    rm -rf /usr/share/doc/*
+    rm -rf /var/lib/apt/lists/*
 
 # clang-14 repository
 RUN \
@@ -57,7 +56,7 @@ RUN \
 # install clang-14
 RUN \
     apt-get update &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
@@ -66,8 +65,7 @@ RUN \
     apt-get -y clean &&\
     apt-get -y autoclean &&\
     apt-get -y autoremove &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    rm -rf /usr/share/doc/*
+    rm -rf /var/lib/apt/lists/*
 
 # TimeZone Asia/Tokyo
 ENV TZ Asia/Tokyo

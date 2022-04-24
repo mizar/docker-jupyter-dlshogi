@@ -17,9 +17,8 @@ RUN \
     sed -i.bak -r 's!(deb|deb-src) http://archive\.ubuntu\.com/ubuntu!\1 mirror+file:/etc/apt/mirrorlist.txt!' /etc/apt/sources.list
 
 RUN \
-    export DEBIAN_FRONTEND=noninteractive &&\
     apt-get update &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
@@ -32,7 +31,12 @@ RUN \
     curl "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub" | gpg --no-default-keyring --keyring /usr/share/keyrings/cuda.gpg --import - &&\
     echo "deb [signed-by=/usr/share/keyrings/cuda.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" | tee /etc/apt/sources.list.d/cuda.list &&\
     apt-get update &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
+    -o Acquire::Retries="8" \
+    -o DPkg::options::="--force-confdef" \
+    -o DPkg::options::="--force-confold" \
+    upgrade &&\
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
@@ -46,13 +50,12 @@ RUN \
     apt-get -y clean &&\
     apt-get -y autoclean &&\
     apt-get -y autoremove &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    rm -rf /usr/share/doc/*
+    rm -rf /var/lib/apt/lists/*
 
 # install node.js
 RUN \
     curl -sL https://deb.nodesource.com/setup_18.x | bash - &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
     install \
@@ -61,8 +64,7 @@ RUN \
     apt-get -y clean &&\
     apt-get -y autoclean &&\
     apt-get -y autoremove &&\
-    rm -rf /var/lib/apt/lists/* &&\
-    rm -rf /usr/share/doc/*
+    rm -rf /var/lib/apt/lists/*
 
 ENV PATH $PATH:/usr/local/cuda/bin
 

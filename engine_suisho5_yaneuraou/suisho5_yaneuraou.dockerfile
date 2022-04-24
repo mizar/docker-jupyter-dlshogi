@@ -17,9 +17,8 @@ RUN \
     sed -i.bak -r 's!(deb|deb-src) http://archive\.ubuntu\.com/ubuntu!\1 mirror+file:/etc/apt/mirrorlist.txt!' /etc/apt/sources.list
 
 RUN \
-    export DEBIAN_FRONTEND=noninteractive &&\
     apt-get update &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
@@ -29,7 +28,12 @@ RUN \
     curl "https://apt.llvm.org/llvm-snapshot.gpg.key" | gpg --no-default-keyring --keyring /usr/share/keyrings/llvm-snapshot.gpg --import - &&\
     echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot.gpg] https://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | tee /etc/apt/sources.list.d/llvm-toolchain-focal.list &&\
     apt-get update &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
+    -o Acquire::Retries="8" \
+    -o DPkg::options::="--force-confdef" \
+    -o DPkg::options::="--force-confold" \
+    upgrade &&\
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
@@ -45,7 +49,7 @@ RUN \
 # install node.js
 RUN \
     curl -sL https://deb.nodesource.com/setup_18.x | bash - &&\
-    apt-get -y --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
