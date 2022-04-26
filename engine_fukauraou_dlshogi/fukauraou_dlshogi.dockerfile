@@ -23,13 +23,13 @@ RUN \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
     install \
-    ca-certificates curl gpg gpg-agent &&\
+    ca-certificates curl gpg &&\
     mkdir -p /workspace &&\
-    curl "https://apt.llvm.org/llvm-snapshot.gpg.key" | gpg --no-default-keyring --keyring /usr/share/keyrings/llvm-snapshot.gpg --import - &&\
-    echo "deb [signed-by=/usr/share/keyrings/llvm-snapshot.gpg] https://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | tee /etc/apt/sources.list.d/llvm-toolchain-focal.list &&\
-    curl "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin" -o /etc/apt/preferences.d/cuda-repository-pin-600 &&\
-    curl "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub" | gpg --no-default-keyring --keyring /usr/share/keyrings/cuda.gpg --import - &&\
-    echo "deb [signed-by=/usr/share/keyrings/cuda.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" | tee /etc/apt/sources.list.d/cuda.list &&\
+    curl -sSL "https://apt.llvm.org/llvm-snapshot.gpg.key" | gpg --dearmor -o /usr/share/keyrings/llvm-snapshot.gpg &&\
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/llvm-snapshot.gpg] https://apt.llvm.org/focal/ llvm-toolchain-focal-14 main" | tee /etc/apt/sources.list.d/llvm-toolchain-focal.list > /dev/null &&\
+    curl -sSL "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin" -o /etc/apt/preferences.d/cuda-repository-pin-600 &&\
+    curl -sSL "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/7fa2af80.pub" | gpg --dearmor -o /usr/share/keyrings/cuda.gpg &&\
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/cuda.gpg] https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /" | tee /etc/apt/sources.list.d/cuda.list > /dev/null &&\
     apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
@@ -54,7 +54,7 @@ RUN \
 
 # install node.js
 RUN \
-    curl -sL https://deb.nodesource.com/setup_18.x | bash - &&\
+    curl -sSL https://deb.nodesource.com/setup_18.x | bash - &&\
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
