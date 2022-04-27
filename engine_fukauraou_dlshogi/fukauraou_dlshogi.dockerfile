@@ -56,6 +56,7 @@ RUN \
 RUN \
     curl -sSL https://deb.nodesource.com/setup_18.x | bash - &&\
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
+    -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
     install \
