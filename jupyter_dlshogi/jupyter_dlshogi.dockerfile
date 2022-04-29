@@ -72,9 +72,9 @@ ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:ja
 ENV LC_ALL ja_JP.UTF-8
 
-RUN echo "20211222_0205"
-# install cshogi
-RUN pip3 install cshogi
+RUN echo "20220428_1430"
+# install cshogi, tensorrt
+RUN pip3 install cshogi nvidia-pyindex nvidia-tensorrt==8.2.3.0
 
 # update jupyterlab
 RUN conda install -c conda-forge dask-labextension git jupyterlab jupyterlab-git jupyterlab-language-pack-ja-JP
