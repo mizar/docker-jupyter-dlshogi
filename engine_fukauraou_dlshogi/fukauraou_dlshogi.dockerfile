@@ -2,6 +2,18 @@ FROM ubuntu:20.04
 
 SHELL ["/bin/bash", "-c"]
 
+#ENV NV_CUDA_SUFFIX "11-4"
+ENV NV_CUDA_SUFFIX "11-6"
+
+#ENV NV_CUDNN_VERSION 8.2.4.15-1+cuda11.4
+ENV NV_CUDNN_VERSION 8.4.0.27-1+cuda11.6
+
+ENV NV_INFER_VERSION "8.2.4-1+cuda11.4"
+
+ENV NV_CUDNN_PACKAGE "libcudnn8=$NV_CUDNN_VERSION"
+ENV NV_CUDNN_PACKAGE_DEV "libcudnn8-dev=$NV_CUDNN_VERSION"
+ENV NV_CUDNN_PACKAGE_NAME "libcudnn8"
+
 # mirror://mirrors.ubuntu.com/mirrors.txt
 RUN \
     touch /etc/apt/mirrorlist.txt &&\
@@ -43,9 +55,17 @@ RUN \
     install \
     expect git ruby unzip vim-tiny \
     build-essential clang-14 llvm-14 libomp-14-dev lld-14 libopenblas-dev \
-    cuda-minimal-build-11-6 cuda-nvrtc-dev-11-6 libcublas-11-6 libcublas-dev-11-6 \
-    libcudnn8 libcudnn8-dev \
+    cuda-minimal-build-${NV_CUDA_SUFFIX} cuda-nvrtc-dev-${NV_CUDA_SUFFIX} libcublas-${NV_CUDA_SUFFIX} libcublas-dev-${NV_CUDA_SUFFIX} \
+    ${NV_CUDNN_PACKAGE} ${NV_CUDNN_PACKAGE_DEV} \
+    libnvinfer8=${NV_INFER_VERSION} libnvonnxparsers8=${NV_INFER_VERSION} libnvparsers8=${NV_INFER_VERSION} libnvinfer-plugin8=${NV_INFER_VERSION} \
+    libnvinfer-dev=${NV_INFER_VERSION} libnvinfer-plugin-dev=${NV_INFER_VERSION} libnvonnxparsers-dev=${NV_INFER_VERSION} libnvparsers-dev=${NV_INFER_VERSION} \
+    python3-libnvinfer=${NV_INFER_VERSION} \
+    &&\
+    apt-mark hold \
+    ${NV_CUDNN_PACKAGE_NAME} \
+    libnvinfer8 libnvinfer-plugin8 libnvonnxparsers8 libnvparsers8 \
     libnvinfer-dev libnvinfer-plugin-dev libnvonnxparsers-dev libnvparsers-dev \
+    python3-libnvinfer \
     &&\
     apt-get -y clean &&\
     apt-get -y autoclean &&\
