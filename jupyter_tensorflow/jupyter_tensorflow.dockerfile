@@ -35,7 +35,7 @@ RUN \
 
 # install node.js
 RUN \
-    curl -sSL https://deb.nodesource.com/setup_18.x | bash - &&\
+    curl -sSL https://deb.nodesource.com/setup_lts.x | bash - &&\
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends \
     -o Acquire::Retries="8" \
     -o DPkg::options::="--force-confdef" \
