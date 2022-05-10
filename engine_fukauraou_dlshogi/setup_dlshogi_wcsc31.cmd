@@ -6,5 +6,5 @@ powershell "Push-Location .dl;Expand-Archive dlshogi_with_gct_wcsc31.zip -Force;
 copy .dl\dlshogi_with_gct_wcsc31\model-0000225kai.onnx model.onnx
 copy .dl\dlshogi_with_gct_wcsc31\book_model-0000223_225kai_4m.bin book.bin
 )
-call fukauraou_dlshogi_build.bat
+call fukauraou_dlshogi_build.cmd
 docker run -i --rm --gpus all -v %CD%:/workspace --ipc=host fukauraou FukauraOu-avx2 isready , quit

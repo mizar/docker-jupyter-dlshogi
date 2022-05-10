@@ -14,9 +14,9 @@
   - `suisho5_yaneuraou_build.cmd` : 水匠5+やねうら王エンジンビルド用コマンドスクリプト
   - `suisho5_yaneuraou_rebuild.cmd` : 水匠5+やねうら王エンジン再ビルド用コマンドスクリプト
 - エンジン起動用バッチファイル(ShogiGUI等への登録用)
-  - `engine_suisho5_yaneuraou_avx2.bat` : 水匠5+やねうら王エンジン(AVX2/ZEN3版)起動用バッチファイル
-  - `engine_suisho5_yaneuraou_zen2.bat` : 水匠5+やねうら王エンジン(ZEN2版)起動用バッチファイル
-  - `engine_suisho5_yaneuraou_sse42.bat` : 水匠5+やねうら王エンジン(SSE42版)起動用バッチファイル
+  - `engine_suisho5_yaneuraou_avx2.cmd` : 水匠5+やねうら王エンジン(AVX2/ZEN3版)起動用バッチファイル
+  - `engine_suisho5_yaneuraou_zen2.cmd` : 水匠5+やねうら王エンジン(ZEN2版)起動用バッチファイル
+  - `engine_suisho5_yaneuraou_sse42.cmd` : 水匠5+やねうら王エンジン(SSE42版)起動用バッチファイル
 - その他
   - `engine_options.txt` : 水匠5+やねうら王用デフォルトオプション変更用ファイル
   - `README.md` : このファイル
