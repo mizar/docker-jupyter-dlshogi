@@ -87,7 +87,7 @@ RUN \
     apt-get -y autoremove &&\
     rm -rf /var/lib/apt/lists/*
 
-ENV PATH $PATH:/usr/local/cuda/bin
+ENV PATH ${PATH}:/usr/local/cuda/bin
 
 WORKDIR /workspace
 
@@ -96,6 +96,13 @@ WORKDIR /workspace
 
 #COPY patch_yaneuraou*.diff ~/
 #COPY patch_dlshogi*.diff ~/
+
+# download onnxruntime
+RUN \
+    curl --create-dirs -RLo ~/resource/onnxruntime-linux-x64-1.11.1.tgz https://github.com/microsoft/onnxruntime/releases/download/v1.11.1/onnxruntime-linux-x64-1.11.1.tgz &&\
+    tar xvf ~/resource/onnxruntime-linux-x64-1.11.1.tgz -C ~ &&\
+    cp ~/onnxruntime-linux-x64-1.11.1/lib/*.so* /lib
+#ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/root/onnxruntime-linux-x64-1.11.1/lib"
 
 RUN \
     echo "shallow clone : shogi-server" &&\
@@ -135,9 +142,11 @@ RUN \
     #make YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON clean &&\
     echo "build : FukauraOu" &&\
     cd ~/YaneuraOu/source &&\
-    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT EXTRA_CPPFLAGS='-I/usr/local/cuda/include' EXTRA_LDFLAGS='-fuse-ld=lld -lnvrtc -lcuda -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64/stubs' COMPILER=clang++-14 TARGET_CPU=AVX2 TARGET=/usr/local/bin/FukauraOu-avx2 normal >& >(tee ~/FukauraOu-avx2.log) &&\
+    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_ORT_CPU EXTRA_CPPFLAGS='-fexceptions -I/root/onnxruntime-linux-x64-1.11.1/include' EXTRA_LDFLAGS='-lonnxruntime -L/root/onnxruntime-linux-x64-1.11.1/lib' COMPILER=clang++-14 TARGET_CPU=AVX2 TARGET=/usr/local/bin/FukauraOu-cpu normal >& >(tee ~/FukauraOu-cpu.log) &&\
+    make YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_ORT_CPU clean &&\
+    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT EXTRA_CPPFLAGS='-I/usr/local/cuda/include' EXTRA_LDFLAGS='-fuse-ld=lld -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64/stubs' COMPILER=clang++-14 TARGET_CPU=AVX2 TARGET=/usr/local/bin/FukauraOu-avx2 normal >& >(tee ~/FukauraOu-avx2.log) &&\
     make YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT clean &&\
-    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT EXTRA_CPPFLAGS='-I/usr/local/cuda/include' EXTRA_LDFLAGS='-fuse-ld=lld -lnvrtc -lcuda -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64/stubs' COMPILER=clang++-14 TARGET_CPU=ZEN2 TARGET=/usr/local/bin/FukauraOu-zen2 normal >& >(tee ~/FukauraOu-zen2.log) &&\
+    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT EXTRA_CPPFLAGS='-I/usr/local/cuda/include' EXTRA_LDFLAGS='-fuse-ld=lld -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64/stubs' COMPILER=clang++-14 TARGET_CPU=ZEN2 TARGET=/usr/local/bin/FukauraOu-zen2 normal >& >(tee ~/FukauraOu-zen2.log) &&\
     make YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT clean
 
 RUN \

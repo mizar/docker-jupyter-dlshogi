@@ -13,8 +13,10 @@
 ## ファイル構成
 
 - エンジンベンチマーク用コマンドスクリプト(エンジン動作環境のビルド/ベンチマーク用)
+  - `bench_t1_fukauraou_cpu.cmd` : ふかうら王エンジン(CPU,スレッド数=1)ベンチマーク用コマンドスクリプト
   - `bench_t1_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版,スレッド数=1)ベンチマーク用コマンドスクリプト
   - `bench_t1_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版,スレッド数=1)ベンチマーク用コマンドスクリプト
+  - `bench_t2_fukauraou_cpu.cmd` : ふかうら王エンジン(CPU版,スレッド数=2)ベンチマーク用コマンドスクリプト
   - `bench_t2_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版,スレッド数=2)ベンチマーク用コマンドスクリプト
   - `bench_t2_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版,スレッド数=2)ベンチマーク用コマンドスクリプト
   - `bench_t3_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版,スレッド数=3)ベンチマーク用コマンドスクリプト
@@ -28,6 +30,7 @@
   - `fukauraou_dlshogi_rebuild.cmd` : ふかうら王/dlshogiエンジン再ビルド用コマンドスクリプト
 - エンジン起動用バッチファイル(ShogiGUI等への登録用)
   - `engine_dlshogi.cmd` : dlshogiエンジン(AVX2版)起動用バッチファイル
+  - `engine_fukauraou_cpu.cmd` : ふかうら王エンジン(CPU版)起動用バッチファイル
   - `engine_fukauraou_avx2.cmd` : ふかうら王エンジン(AVX2版)起動用バッチファイル
   - `engine_fukauraou_zen2.cmd` : ふかうら王エンジン(ZEN2版)起動用バッチファイル
 - その他
