@@ -3,12 +3,13 @@ FROM ubuntu:20.04
 SHELL ["/bin/bash", "-c"]
 
 #ENV NV_CUDA_SUFFIX "11-4"
-ENV NV_CUDA_SUFFIX "11-6"
+#ENV NV_CUDA_SUFFIX "11-6"
+ENV NV_CUDA_SUFFIX "11-7"
 
 #ENV NV_CUDNN_VERSION 8.2.4.15-1+cuda11.4
 ENV NV_CUDNN_VERSION 8.4.0.27-1+cuda11.6
 
-ENV NV_INFER_VERSION "8.2.4-1+cuda11.4"
+ENV NV_INFER_VERSION 8.2.4-1+cuda11.4
 
 ENV NV_CUDNN_PACKAGE "libcudnn8=$NV_CUDNN_VERSION"
 ENV NV_CUDNN_PACKAGE_DEV "libcudnn8-dev=$NV_CUDNN_VERSION"
@@ -92,7 +93,7 @@ ENV PATH ${PATH}:/usr/local/cuda/bin
 WORKDIR /workspace
 
 # download suisho5 eval
-# RUN curl --create-dirs -RLo ~/resource/suisho5_20211123.halfkp.nnue.cpp.xz https://github.com/mizar/YaneuraOu/releases/download/resource/suisho5_20211123.halfkp.nnue.cpp.xz
+RUN curl --create-dirs -RLo ~/resource/suisho5_20211123.halfkp.nnue.cpp.xz https://github.com/mizar/YaneuraOu/releases/download/resource/suisho5_20211123.halfkp.nnue.cpp.xz
 
 #COPY patch_yaneuraou*.diff ~/
 #COPY patch_dlshogi*.diff ~/
@@ -101,8 +102,9 @@ WORKDIR /workspace
 RUN \
     curl --create-dirs -RLo ~/resource/onnxruntime-linux-x64-1.11.1.tgz https://github.com/microsoft/onnxruntime/releases/download/v1.11.1/onnxruntime-linux-x64-1.11.1.tgz &&\
     tar xvf ~/resource/onnxruntime-linux-x64-1.11.1.tgz -C ~ &&\
-    cp ~/onnxruntime-linux-x64-1.11.1/lib/*.so* /lib
-#ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/root/onnxruntime-linux-x64-1.11.1/lib"
+    cp ~/onnxruntime-linux-x64-1.11.1/lib/*.so* /usr/local/lib &&\
+    ldconfig
+#ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${HOME}/onnxruntime-linux-x64-1.11.1/lib"
 
 RUN \
     echo "shallow clone : shogi-server" &&\
@@ -133,17 +135,23 @@ RUN \
 
 # build Suisho5 + YaneuraOu
 RUN \
-    #echo "build : YaneuraOu" &&\
-    #cd ~/YaneuraOu/source &&\
-    #xz -cdk ~/resource/suisho5_20211123.halfkp.nnue.cpp.xz > eval/nnue/embedded_nnue.cpp &&\
-    #nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON EXTRA_CPPFLAGS='-DENGINE_OPTIONS="\"option=name=FV_SCALE=type=spin=default=24=min=1=max=128\""' COMPILER=clang++-14 EXTRA_LDFLAGS='-fuse-ld=lld' TARGET_CPU=AVX2 TARGET=/usr/local/bin/Suisho5-YaneuraOu-tournament-avx2 tournament >& >(tee ~/Suisho5-YaneuraOu-tournament-avx2.log) &&\
-    #make YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON clean &&\
-    #nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON EXTRA_CPPFLAGS='-DENGINE_OPTIONS="\"option=name=FV_SCALE=type=spin=default=24=min=1=max=128\""' COMPILER=clang++-14 EXTRA_LDFLAGS='-fuse-ld=lld' TARGET_CPU=ZEN2 TARGET=/usr/local/bin/Suisho5-YaneuraOu-tournament-zen2 tournament >& >(tee ~/Suisho5-YaneuraOu-tournament-zen2.log) &&\
-    #make YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON clean &&\
+    echo "build : YaneuraOu" &&\
+    cd ~/YaneuraOu/source &&\
+    xz -cdk ~/resource/suisho5_20211123.halfkp.nnue.cpp.xz > eval/nnue/embedded_nnue.cpp &&\
+    make YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON clean &&\
+    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON EXTRA_CPPFLAGS='-DENGINE_OPTIONS="\"option=name=FV_SCALE=type=spin=default=24=min=1=max=128\""' COMPILER=clang++-14 EXTRA_LDFLAGS='-fuse-ld=lld' TARGET_CPU=AVX2 TARGET=/usr/local/bin/Suisho5-YaneuraOu-tournament-avx2 tournament >& >(tee ~/Suisho5-YaneuraOu-tournament-avx2.log) &&\
+    make YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON clean &&\
+    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON EXTRA_CPPFLAGS='-DENGINE_OPTIONS="\"option=name=FV_SCALE=type=spin=default=24=min=1=max=128\""' COMPILER=clang++-14 EXTRA_LDFLAGS='-fuse-ld=lld' TARGET_CPU=ZEN2 TARGET=/usr/local/bin/Suisho5-YaneuraOu-tournament-zen2 tournament >& >(tee ~/Suisho5-YaneuraOu-tournament-zen2.log) &&\
+    make YANEURAOU_EDITION=YANEURAOU_ENGINE_NNUE EVAL_EMBEDDING=ON clean
+
+# build FukauraOu
+RUN \
     echo "build : FukauraOu" &&\
     cd ~/YaneuraOu/source &&\
-    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_ORT_CPU EXTRA_CPPFLAGS='-fexceptions -I/root/onnxruntime-linux-x64-1.11.1/include' EXTRA_LDFLAGS='-lonnxruntime -L/root/onnxruntime-linux-x64-1.11.1/lib' COMPILER=clang++-14 TARGET_CPU=AVX2 TARGET=/usr/local/bin/FukauraOu-cpu normal >& >(tee ~/FukauraOu-cpu.log) &&\
     make YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_ORT_CPU clean &&\
+    nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_ORT_CPU EXTRA_CPPFLAGS='-I/root/onnxruntime-linux-x64-1.11.1/include' EXTRA_LDFLAGS='-fuse-ld=lld -L/root/onnxruntime-linux-x64-1.11.1/lib' COMPILER=clang++-14 TARGET_CPU=AVX2 TARGET=/usr/local/bin/FukauraOu-cpu normal >& >(tee ~/FukauraOu-cpu.log) &&\
+    make YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_ORT_CPU clean &&\
+    make YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT clean &&\
     nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT EXTRA_CPPFLAGS='-I/usr/local/cuda/include' EXTRA_LDFLAGS='-fuse-ld=lld -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64/stubs' COMPILER=clang++-14 TARGET_CPU=AVX2 TARGET=/usr/local/bin/FukauraOu-avx2 normal >& >(tee ~/FukauraOu-avx2.log) &&\
     make YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT clean &&\
     nice make -j$(nproc) YANEURAOU_EDITION=YANEURAOU_ENGINE_DEEP_TENSOR_RT EXTRA_CPPFLAGS='-I/usr/local/cuda/include' EXTRA_LDFLAGS='-fuse-ld=lld -L/usr/local/cuda/lib64 -L/usr/local/cuda/lib64/stubs' COMPILER=clang++-14 TARGET_CPU=ZEN2 TARGET=/usr/local/bin/FukauraOu-zen2 normal >& >(tee ~/FukauraOu-zen2.log) &&\
